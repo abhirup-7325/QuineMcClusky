@@ -6,41 +6,45 @@
 
 class BooleanFunction {
 public:
-    BooleanFunction(int n, std::vector<int> minterms) {
-        _n = n;
+    BooleanFunction(int numberOfVariables, std::vector<int> minterms) {
+        _numberOfVariables = numberOfVariables;
         _minterms = minterms;
     }
 
     BooleanFunction() {
-        int n;
+        int numberOfVariables;
         std::cout << "Enter the number of variables: ";
-        std::cin >> n;
+        std::cin >> numberOfVariables;
 
-        std::vector<int> minterms(n);
+        int numberOfMinterms;
         std::cout << "Enter the minterms: ";
-        for (int i = 0; i < n; i++) {
+        std::cin >> numberOfMinterms;
+
+        _minterms.resize(numberOfMinterms);
+        for (int i = 0; i < numberOfMinterms; i++) {
+            std::cout << "Enter minterm " << i + 1 << ": ";
             std::cin >> _minterms[i];
         }
 
-        _n = n;
-        _minterms = minterms;
+        _numberOfVariables = numberOfVariables;
     }
 
     void print() {
         std::string functionExpression = "";
-        std::string term = "";
+
         for (int i = 0; i < _minterms.size(); i++) {
-            term = "";
+            std::string term = "";
 
             if (i != 0) {
                 functionExpression += " + ";
             }
 
-            for (int j = 0; j < _n; j++) {
+            for (int j = 0; j < _numberOfVariables; j++) {
                 if (_minterms[i] & (1 << j)) {
-                    term += (char)('A' + _n - 1 - j);
+                    term += (char)('A' + _numberOfVariables - 1 - j);
                 } else {
-                    term += (char)('A' + _n - 1 - j) + "'";
+                    term += (char)('A' + _numberOfVariables - 1 - j);
+                    term += "'";
                 }
             }
 
@@ -52,7 +56,7 @@ public:
 
 
 private:
-    int _n;
+    int _numberOfVariables;
     std::vector<int> _minterms;
 };
 
